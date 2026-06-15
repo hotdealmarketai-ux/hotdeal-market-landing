@@ -122,6 +122,18 @@
     });
   });
 
+  /* ---------- 헤더 투명(영상 위) ↔ 흰배경(스크롤) 전환 ---------- */
+  var headerEl = document.querySelector(".header");
+  var videoHeroEl = document.querySelector(".video-hero");
+  function onScrollHeader() {
+    var threshold = videoHeroEl ? (videoHeroEl.offsetHeight - headerEl.offsetHeight - 10) : 60;
+    if (window.scrollY > threshold) headerEl.classList.add("scrolled");
+    else headerEl.classList.remove("scrolled");
+  }
+  window.addEventListener("scroll", onScrollHeader, { passive: true });
+  window.addEventListener("resize", onScrollHeader);
+  onScrollHeader();
+
   /* ---------- 메인 영상 → 다음 섹션 스크롤 ---------- */
   var vhScroll = document.getElementById("vhScroll");
   if (vhScroll) {

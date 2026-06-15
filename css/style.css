@@ -145,7 +145,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .header.scrolled .nav-links a:hover { color: var(--green-600); }
 .header.scrolled .nav-tel { color: var(--green-700); }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--ink); }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; color: var(--ink); }
 .brand .mark { width: 32px; height: 32px; flex: 0 0 auto; }
 .brand-logo { height: 34px; width: auto; display: block; }
 .brand-name { font-family: var(--font); font-weight: 900; font-size: 21px; letter-spacing: -0.03em; line-height: 1; }

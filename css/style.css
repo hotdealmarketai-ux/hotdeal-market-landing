@@ -147,7 +147,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--ink); }
 .brand .mark { width: 32px; height: 32px; flex: 0 0 auto; }
-.brand-logo { height: 30px; width: auto; display: block; }
+.brand-logo { height: 34px; width: auto; display: block; }
+.brand-name { font-family: var(--font); font-weight: 900; font-size: 21px; letter-spacing: -0.03em; line-height: 1; }
 .brand-logo-green { display: none; }
 .header.scrolled .brand-logo-white { display: none; }
 .header.scrolled .brand-logo-green { display: block; }
@@ -164,7 +165,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     radial-gradient(900px 500px at 85% -10%, var(--green-50), transparent 60%),
     linear-gradient(180deg, #fff, var(--bg-soft)); }
 /* 단독 메인 영상 섹션 (가로 직사각 · 어둡게+블러 · 헤더까지 감쌈) */
-.video-hero { position: relative; width: 100%; height: 60vh; min-height: 400px; max-height: 680px; overflow: hidden; background: #0c3324; }
+.video-hero { position: relative; width: 100%; height: 100vh; min-height: 560px; overflow: hidden; background: #0c3324; }
 .video-hero .vh-video { width: 100%; height: 100%; object-fit: cover; display: block;
   filter: brightness(.6) blur(2px); transform: scale(1.06); }
 .video-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;

@@ -5,11 +5,11 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  /* Brand greens */
-  --green-900: #0c3324;
-  --green-800: #114030;
-  --green-700: #15543f;   /* primary */
-  --green-600: #1d6b4f;
+  /* Brand greens — 브랜드 컬러: 스크롤 시 '핫딜마켓' 텍스트 색상(#0f1d16) 기준 */
+  --green-900: #060f0a;
+  --green-800: #0a160f;
+  --green-700: #0f1d16;   /* primary = 브랜드 컬러 */
+  --green-600: #1a3326;
   --green-500: #2a8a64;
   --green-400: #45a87f;
   --green-100: #dcefe5;
@@ -170,13 +170,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   filter: brightness(.6) blur(2px); transform: scale(1.06); }
 .video-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, rgba(6,16,11,.5) 0%, rgba(6,16,11,.18) 32%, rgba(6,16,11,.38) 100%); }
-.vh-scroll { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3;
+.vh-scroll { position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%); z-index: 5;
   width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--green-700);
   display: grid; place-items: center; cursor: pointer; border: none; box-shadow: var(--shadow);
   animation: vhbounce 1.8s ease-in-out infinite; }
 .vh-scroll:hover { background: #fff; }
 .vh-scroll svg { width: 24px; height: 24px; }
 @keyframes vhbounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+/* 전 지점 매출 띠배너 (마퀴) — 영상 하단 고정 */
+.sales-marquee { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; height: 52px;
+  display: flex; align-items: center; overflow: hidden; background: var(--green-700);
+  border-top: 1px solid rgba(255,255,255,.14); box-shadow: 0 -6px 20px rgba(0,0,0,.22); }
+.sales-marquee .mq-track { display: flex; align-items: center; white-space: nowrap; flex: none;
+  will-change: transform; animation: mqscroll 38s linear infinite; }
+.sales-marquee:hover .mq-track { animation-play-state: paused; }
+.sales-marquee .mq-item { display: inline-flex; align-items: center; color: rgba(255,255,255,.92);
+  font-size: 15px; font-weight: 600; letter-spacing: -0.01em; padding: 0 30px; }
+.sales-marquee .mq-item::after { content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); margin-left: 30px; }
+.sales-marquee .mq-item b { color: #fff; font-weight: 800; margin: 0 4px; letter-spacing: 0; }
+@keyframes mqscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .sales-marquee .mq-track { animation: none; } }
 
 /* 히어로 배경 사진(매장) + 어두운 스크림 */
 .hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;

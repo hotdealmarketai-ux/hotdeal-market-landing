@@ -205,6 +205,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   white-space: nowrap; flex: 0 0 auto; }
 .quick-form .qf-label::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
   background: var(--accent); margin-right: 9px; vertical-align: middle; }
+.quick-form .qf-brand { display: inline-flex; align-items: center; gap: 9px; }
+.quick-form .qf-brand::before { content: none; }
+.quick-form .qf-logo { height: 27px; width: auto; display: block; }
+.quick-form .qf-brandname { color: #fff; font-weight: 900; font-size: 19px; letter-spacing: -0.03em; line-height: 1; }
 .qf-fields { display: flex; align-items: center; gap: 9px; flex: 1 1 auto; min-width: 0; }
 .qf-fields input { height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 9px;
   background: rgba(255,255,255,.97); color: var(--ink); font-size: 14.5px; font-weight: 500;

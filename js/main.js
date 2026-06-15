@@ -122,6 +122,15 @@
     });
   });
 
+  /* ---------- 메인 영상 → 다음 섹션 스크롤 ---------- */
+  var vhScroll = document.getElementById("vhScroll");
+  if (vhScroll) {
+    vhScroll.addEventListener("click", function () {
+      var hero = document.querySelector(".hero");
+      if (hero) window.scrollTo({ top: hero.getBoundingClientRect().top + window.scrollY - 60, behavior: "smooth" });
+    });
+  }
+
   /* ---------- 지점 매출 메모 슬라이더 (transform) ---------- */
   var proofTrack = document.getElementById("proofTrack");
   if (proofTrack) {

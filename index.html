@@ -7,7 +7,7 @@
 <meta name="description" content="실제 운영 데이터로 검증된 핫딜마켓 가맹점 모집. 주간 6시간 근무 + 24시간 무인 운영 시스템. 전국 지점 평균 월매출 6,280만원, 투자금 약 730만원대부터. 업종변경 시 가맹비 550만원 면제. 가맹 상담 010-5503-8979." />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-<link rel="stylesheet" href="css/style.css?v=20260615a" />
+<link rel="stylesheet" href="css/style.css?v=20260615b" />
 </head>
 <body>
 
@@ -82,11 +82,18 @@
 
 <main id="top">
 
-<!-- ============ HERO (배경 영상) ============ -->
-<section class="hero">
-  <video class="hero-bgvid" autoplay muted loop playsinline preload="auto" poster="images/hero-bg.jpg">
+<!-- ============ 0. 메인 배경 영상 (단독) ============ -->
+<section class="video-hero">
+  <video class="vh-video" autoplay muted loop playsinline preload="auto" poster="images/hero-bg.jpg">
     <source src="video/intro.mp4" type="video/mp4" />
   </video>
+  <button class="vh-scroll" id="vhScroll" aria-label="아래로 스크롤">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</section>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
   <div class="container hero-inner">
     <div class="hero-text reveal">
       <h1>하루 <span class="hl">6시간 근무</span>,<br>월 순수익 <span class="acc">500만원</span></h1>
@@ -649,6 +656,6 @@
   <span id="toastMsg">상담 신청이 접수되었습니다!</span>
 </div>
 
-<script src="js/main.js?v=20260615a"></script>
+<script src="js/main.js?v=20260615b"></script>
 </body>
 </html>

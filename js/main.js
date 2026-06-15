@@ -115,6 +115,15 @@
     if (el) el.focus();
   }
 
+  /* ---------- 하단 고정 도크(마퀴+상담폼) 높이만큼 본문 여백 확보 ---------- */
+  var heroDock = document.querySelector(".hero-dock");
+  function syncDockSpace() {
+    if (heroDock) document.body.style.paddingBottom = heroDock.offsetHeight + "px";
+  }
+  syncDockSpace();
+  window.addEventListener("resize", syncDockSpace);
+  window.addEventListener("load", syncDockSpace);
+
   /* ---------- Smooth anchor + close modal on in-page nav ---------- */
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener("click", function () {

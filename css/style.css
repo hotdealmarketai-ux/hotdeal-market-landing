@@ -147,7 +147,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--ink); }
 .brand .mark { width: 32px; height: 32px; flex: 0 0 auto; }
-.brand-logo { height: 42px; width: auto; display: block; }
+.brand-logo { height: 30px; width: auto; display: block; }
 .brand-logo-green { display: none; }
 .header.scrolled .brand-logo-white { display: none; }
 .header.scrolled .brand-logo-green { display: block; }

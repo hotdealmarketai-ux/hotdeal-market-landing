@@ -48,7 +48,7 @@
     document.body.style.overflow = "";
   }
 
-  floatBtn.addEventListener("click", openModal);
+  if (floatBtn) floatBtn.addEventListener("click", openModal);
   modal.addEventListener("click", function (e) {
     if (e.target.hasAttribute("data-close")) closeModal();
   });

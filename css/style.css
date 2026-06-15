@@ -170,7 +170,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   filter: brightness(.6) blur(2px); transform: scale(1.06); }
 .video-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, rgba(6,16,11,.5) 0%, rgba(6,16,11,.18) 32%, rgba(6,16,11,.38) 100%); }
-.vh-scroll { position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%); z-index: 5;
+.vh-scroll { position: absolute; left: 50%; bottom: 188px; transform: translateX(-50%); z-index: 5;
   width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--green-700);
   display: grid; place-items: center; cursor: pointer; border: none; box-shadow: var(--shadow);
   animation: vhbounce 1.8s ease-in-out infinite; }
@@ -178,8 +178,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .vh-scroll svg { width: 24px; height: 24px; }
 @keyframes vhbounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
 
-/* 전 지점 매출 띠배너 (마퀴) — 영상 하단 고정 */
-.sales-marquee { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; height: 52px;
+/* 영상 하단 도크: 매출 마퀴 + 빠른 상담 폼 바 */
+.hero-dock { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; }
+
+/* 전 지점 매출 띠배너 (마퀴) */
+.sales-marquee { position: relative; height: 52px;
   display: flex; align-items: center; overflow: hidden; background: var(--green-700);
   border-top: 1px solid rgba(255,255,255,.14); box-shadow: 0 -6px 20px rgba(0,0,0,.22); }
 .sales-marquee .mq-track { display: flex; align-items: center; white-space: nowrap; flex: none;
@@ -192,6 +195,44 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .sales-marquee .mq-item b { color: #fff; font-weight: 800; margin: 0 4px; letter-spacing: 0; }
 @keyframes mqscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .sales-marquee .mq-track { animation: none; } }
+
+/* 빠른 상담 폼 바 — 마퀴 바로 아래 */
+.quick-bar { background: #16271e; border-top: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 -4px 18px rgba(0,0,0,.28); }
+.quick-form { max-width: var(--maxw); margin: 0 auto; padding: 13px 24px 11px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.quick-form .qf-label { color: #fff; font-weight: 800; font-size: 16px; letter-spacing: -0.02em;
+  white-space: nowrap; flex: 0 0 auto; }
+.quick-form .qf-label::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); margin-right: 9px; vertical-align: middle; }
+.qf-fields { display: flex; align-items: center; gap: 9px; flex: 1 1 auto; min-width: 0; }
+.qf-fields input { height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 9px;
+  background: rgba(255,255,255,.97); color: var(--ink); font-size: 14.5px; font-weight: 500;
+  padding: 0 14px; min-width: 0; }
+.qf-fields input[name="name"] { flex: 0 1 150px; }
+.qf-fields input[name="phone"] { flex: 1 1 200px; }
+.qf-fields input[name="region"] { flex: 1 1 170px; }
+.qf-fields input::placeholder { color: #8a978f; }
+.qf-fields input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,122,26,.25); }
+.qf-submit { flex: 0 0 auto; height: 42px; padding: 0 26px; border-radius: 9px; border: none; cursor: pointer;
+  background: var(--accent); color: #fff; font-size: 15px; font-weight: 800; letter-spacing: -0.01em;
+  white-space: nowrap; transition: background .15s, transform .15s; }
+.qf-submit:hover { background: var(--accent-600); transform: translateY(-1px); }
+.qf-submit:disabled { opacity: .7; cursor: default; transform: none; }
+.qf-agree { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+  color: rgba(255,255,255,.7); font-size: 12.5px; cursor: pointer; }
+.qf-agree input { width: 15px; height: 15px; accent-color: var(--accent); flex: 0 0 auto; }
+.qf-agree .pp-inline { background: none; border: none; padding: 0; color: rgba(255,255,255,.92);
+  text-decoration: underline; cursor: pointer; font-size: 12.5px; }
+@media (max-width: 860px) {
+  .quick-form { gap: 10px; padding: 12px 16px; }
+  .quick-form .qf-label { font-size: 14.5px; width: 100%; }
+  .qf-fields { flex-wrap: wrap; gap: 8px; }
+  .qf-fields input[name="name"] { flex: 1 1 120px; }
+  .qf-fields input[name="phone"] { flex: 2 1 150px; }
+  .qf-fields input[name="region"] { flex: 1 1 100%; }
+  .qf-submit { flex: 1 1 100%; }
+}
 
 /* 히어로 배경 사진(매장) + 어두운 스크림 */
 .hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
@@ -713,10 +754,12 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .cost-total .ct-right strong { font-size: 24px; color: var(--mint-bright); letter-spacing: -.03em; }
 
 /* ---- Floating stack (call + form) ---- */
-.float-stack { position: fixed; right: 22px; bottom: 22px; z-index: 60; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+.float-stack { position: fixed; right: 22px; bottom: 134px; z-index: 60; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
 .float-stack .float-btn { position: static; right: auto; bottom: auto; }
 .float-btn.call { background: var(--green-700); }
 .float-btn.call:hover { background: var(--green-800); }
+/* 모바일: 영상 하단 도크(폼)가 CTA 역할 → 플로팅 버튼 숨김 (소스 순서상 기본 규칙 뒤) */
+@media (max-width: 860px) { .float-stack { display: none; } }
 
 /* ---- Green band: branch revenue memo slider ---- */
 .section.greenbg { background: linear-gradient(135deg, var(--green-600), var(--green-800)); }

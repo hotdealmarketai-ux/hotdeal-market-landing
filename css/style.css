@@ -245,8 +245,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .zone-scrim { position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(180deg, rgba(8,18,12,.5) 0%, rgba(8,18,12,.58) 50%, rgba(8,18,12,.62) 100%); }
 .video-zone > section { position: relative; z-index: 2; background: transparent; }
-/* 존 내부 섹션 배경 투명화(영상이 비치도록) */
-.video-zone .cat-section { background: transparent; }
+/* 존 내부 섹션 배경 투명화(영상이 비치도록) — 단, 취급품목은 검정 배경 */
+.video-zone .cat-section { background: #000; }
 .video-zone .hero { background: transparent; }
 .video-zone .section.greenbg { background: transparent; }
 .hero::before { display: none; }

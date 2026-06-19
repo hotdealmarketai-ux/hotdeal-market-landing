@@ -272,4 +272,64 @@
       });
     });
   });
+
+  /* ---------- 배경 음악: 자동재생 시도 → 막히면 첫 인터랙션에 재생 → 무한 루프 + 토글 ---------- */
+  (function () {
+    var bgm = document.getElementById("bgm");
+    var toggle = document.getElementById("bgmToggle");
+    if (!bgm) return;
+    bgm.volume = 0.45;
+    var EVTS = ["pointerdown", "keydown", "touchstart", "wheel", "scroll"];
+
+    function sync() {
+      var on = !bgm.paused;
+      if (toggle) {
+        toggle.classList.toggle("is-playing", on);
+        toggle.setAttribute("aria-pressed", on ? "true" : "false");
+      }
+    }
+    function tryPlay() {
+      var p = bgm.play();
+      if (p && p.catch) p.catch(function () { /* 자동재생 차단됨 → 인터랙션 대기 */ });
+    }
+    function onFirst() {
+      if (bgm.paused) tryPlay();
+      EVTS.forEach(function (ev) { window.removeEventListener(ev, onFirst); });
+    }
+
+    bgm.addEventListener("play", sync);
+    bgm.addEventListener("pause", sync);
+
+    tryPlay(); // 1) 로드 직후 시도
+    EVTS.forEach(function (ev) { window.addEventListener(ev, onFirst, { passive: true }); }); // 2) 폴백
+
+    // 3) 토글: 켜기/끄기
+    if (toggle) {
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (bgm.paused) tryPlay(); else bgm.pause();
+      });
+    }
+    sync();
+  })();
+
+  /* ---------- 가맹점주 인터뷰 — 지점 탭 전환 (하나씩 크게) ---------- */
+  (function () {
+    var tabs = document.querySelectorAll(".itv-tab");
+    var panels = document.querySelectorAll(".itv-panel");
+    if (!tabs.length) return;
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var i = tab.getAttribute("data-b");
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach(function (pn) {
+          pn.classList.toggle("is-active", pn.getAttribute("data-p") === i);
+        });
+      });
+    });
+  })();
 })();

@@ -1412,3 +1412,57 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 @media (prefers-reduced-motion:reduce){
   .memo-body{ transition:none; }
 }
+
+/* ============================================================
+   반응형 통합 패스 (PC 유지 · 작은 화면 리플로우 + 햄버거 메뉴)
+   ============================================================ */
+
+/* ----- 햄버거 토글 ----- */
+.nav-toggle{ display:none; width:42px; height:42px; border:none; background:transparent; cursor:pointer; padding:10px; }
+.nav-toggle span{ display:block; height:2.5px; border-radius:2px; background:currentColor; transition:transform .25s, opacity .2s; }
+.nav-toggle span + span{ margin-top:5px; }
+.header .nav-toggle{ color:#fff; }
+.header.scrolled .nav-toggle{ color:var(--ink); }
+.nav-tel-m{ display:none; }
+
+@media (max-width: 960px){
+  .nav-toggle{ display:block; }
+  .header .nav{ position:relative; }
+  .header.menu-open{ background:rgba(255,255,255,.98); backdrop-filter:blur(10px); box-shadow:var(--shadow-sm); }
+  .header.menu-open .brand-name{ color:var(--ink); }
+  .header.menu-open .brand-logo-white{ display:none; }
+  .header.menu-open .brand-logo-green{ display:block; }
+  .header.menu-open .nav-toggle{ color:var(--ink); }
+  .header.menu-open .nav-toggle span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .header.menu-open .nav-toggle span:nth-child(2){ opacity:0; }
+  .header.menu-open .nav-toggle span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+  .header.menu-open .nav-links{ display:flex !important; flex-direction:column; align-items:stretch; gap:0;
+    position:absolute; top:100%; left:0; right:0; background:#fff; border-top:1px solid var(--line);
+    box-shadow:var(--shadow-lg); padding:6px 0; }
+  .header.menu-open .nav-links a{ color:var(--ink) !important; padding:14px 22px; font-size:16px; font-weight:700;
+    border-bottom:1px solid var(--line); }
+  .header.menu-open .nav-links a:last-child{ border-bottom:none; }
+  .header.menu-open .nav-tel-m{ display:flex; align-items:center; gap:8px; color:var(--green-700) !important; }
+  .header.menu-open .nav-tel-m .ic{ width:16px; height:16px; }
+}
+
+/* ----- 풀스크린(100vh) 섹션 → 모바일 높이 auto ----- */
+@media (max-width: 640px){
+  .cost-fs, .invest-fs, .hero-fs, .income-fs{ min-height:auto !important; }
+}
+
+/* ----- 미커버 그리드 리플로우 (PC 유지, 작은 화면만) ----- */
+@media (max-width: 960px){
+  .ifs-grid, .pf-grid{ grid-template-columns:repeat(2,1fr); }
+  .inf-revs, .opp, .cust-mini{ grid-template-columns:repeat(3,1fr); }
+  .hfs-stats, .pf-statbar{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width: 560px){
+  .ifs-grid, .pf-grid, .sm{ grid-template-columns:1fr; }
+  .inf-revs, .opp, .cust-mini{ grid-template-columns:repeat(2,1fr); }
+}
+
+/* ----- 가로 오버플로 방지 ----- */
+@media (max-width: 1024px){
+  html, body{ overflow-x:hidden; }
+}

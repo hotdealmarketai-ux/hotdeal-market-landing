@@ -177,6 +177,27 @@
   window.addEventListener("resize", onScrollHeader);
   onScrollHeader();
 
+  /* ---------- 모바일 햄버거 메뉴 ---------- */
+  var navToggle = document.getElementById("navToggle");
+  if (navToggle && headerEl) {
+    var closeMenu = function () {
+      headerEl.classList.remove("menu-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    };
+    navToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = headerEl.classList.toggle("menu-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.querySelectorAll("#navLinks a").forEach(function (a) {
+      a.addEventListener("click", closeMenu);
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenu(); });
+    document.addEventListener("click", function (e) {
+      if (headerEl.classList.contains("menu-open") && !headerEl.contains(e.target)) closeMenu();
+    });
+  }
+
   /* ---------- 메인 영상 → 다음 섹션 스크롤 ---------- */
   var vhScroll = document.getElementById("vhScroll");
   if (vhScroll) {

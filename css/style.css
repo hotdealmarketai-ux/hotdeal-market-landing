@@ -144,11 +144,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .header.scrolled .nav-links a { color: var(--body); }
 .header.scrolled .nav-links a:hover { color: var(--green-600); }
 .header.scrolled .nav-tel { color: var(--green-700); }
-.nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
-.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; color: var(--ink); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 54px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--ink); }
 .brand .mark { width: 32px; height: 32px; flex: 0 0 auto; }
-.brand-logo { height: 34px; width: auto; display: block; }
-.brand-name { font-family: var(--font); font-weight: 900; font-size: 21px; letter-spacing: -0.03em; line-height: 1; }
+.brand-logo { height: 27px; width: auto; display: block; }
+.brand-name { font-family: var(--font); font-weight: 900; font-size: 18px; letter-spacing: -0.03em; line-height: 1; }
 .brand-logo-green { display: none; }
 .header.scrolled .brand-logo-white { display: none; }
 .header.scrolled .brand-logo-green { display: block; }
@@ -1324,7 +1324,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .hero--light .hero-statcard .hs > span{ color:var(--muted); }
 
 /* ===== 가맹점주 인터뷰 — 지점 탭 + 피처(하나씩 크게, 영상 위 흰 텍스트) ===== */
-.itv-tabs{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:clamp(22px,3vw,36px); }
+.itv-tabs{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:clamp(12px,2vw,18px); }
 .itv-tab{ font-size:14px; font-weight:700; letter-spacing:-.01em; color:rgba(255,255,255,.82);
   background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.22); border-radius:999px;
   padding:9px 18px; cursor:pointer; transition:background .15s ease, color .15s ease, border-color .15s ease; }
@@ -1336,7 +1336,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-stage{ position:relative; perspective:1600px; height:clamp(370px,38vw,440px); overflow:hidden; }
 .itv-panel{ position:absolute; left:50%; top:50%; width:min(660px,90%); transform-style:preserve-3d;
   transition:transform .55s cubic-bezier(.22,.61,.36,1); will-change:transform; }
-.itv-progress{ height:3px; max-width:660px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:0;
+.itv-progress{ height:3px; max-width:660px; margin:0 auto clamp(7px,1.2vw,12px); border-radius:0;
   background:rgba(255,255,255,.14); overflow:hidden; }
 .itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:0; }
 .itv-cover{ display:grid; grid-template-columns:minmax(0,0.8fr) 1fr; gap:clamp(16px,2vw,28px); align-items:center;
@@ -1423,9 +1423,9 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
    ============================================================ */
 
 /* ----- 햄버거 토글 ----- */
-.nav-toggle{ display:none; width:42px; height:42px; border:none; background:transparent; cursor:pointer; padding:10px; }
-.nav-toggle span{ display:block; height:2.5px; border-radius:2px; background:currentColor; transition:transform .25s, opacity .2s; }
-.nav-toggle span + span{ margin-top:5px; }
+.nav-toggle{ display:none; width:34px; height:34px; border:none; background:transparent; cursor:pointer; padding:8px; }
+.nav-toggle span{ display:block; height:2px; border-radius:2px; background:currentColor; transition:transform .25s, opacity .2s; }
+.nav-toggle span + span{ margin-top:4.5px; }
 .header .nav-toggle{ color:#fff; }
 .header.scrolled .nav-toggle{ color:var(--ink); }
 .nav-tel-m{ display:none; }
@@ -1438,9 +1438,9 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
   .header.menu-open .brand-logo-white{ display:none; }
   .header.menu-open .brand-logo-green{ display:block; }
   .header.menu-open .nav-toggle{ color:var(--ink); }
-  .header.menu-open .nav-toggle span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .header.menu-open .nav-toggle span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
   .header.menu-open .nav-toggle span:nth-child(2){ opacity:0; }
-  .header.menu-open .nav-toggle span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+  .header.menu-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
   .header.menu-open .nav-links{ display:flex !important; flex-direction:column; align-items:stretch; gap:0;
     position:absolute; top:100%; left:0; right:0; background:#fff; border-top:1px solid var(--line);
     box-shadow:var(--shadow-lg); padding:6px 0; }
@@ -1545,3 +1545,20 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
   .opp-msg{ font-size: 14px; margin-top: 26px; }
 }
 @keyframes oppflowV{ to{ top: 110%; } }
+
+/* ----- 모바일 폰트 추가 축소 ----- */
+@media (max-width: 640px){
+  .sec-head h2{ font-size: 22px; line-height: 1.22; }
+  .sec-head p{ font-size: 13.5px; }
+  .eyebrow{ font-size: 11px; letter-spacing: .12em; }
+  .vh-brand{ font-size: 52px; }
+  .vh-eyebrow{ font-size: 14px; }
+  .vh-sub{ font-size: 15px; }
+  .cfs-num{ font-size: 44px; }
+  .hfs-title{ font-size: 26px; }
+  .hfs-sub{ font-size: 14px; }
+  .cbv{ font-size: 34px; }
+  .pf-hv{ font-size: 44px; }
+  .pf-tag{ font-size: 11.5px; }
+  .v{ font-size: 28px; }
+}

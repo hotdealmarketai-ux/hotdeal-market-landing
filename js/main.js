@@ -216,12 +216,11 @@
     var rcNext = document.getElementById("proofNext");
     var rcLayout = function () {
       if (!rcCards.length) return;
-      var cw = rcCards[0].getBoundingClientRect().width;
-      var gap = parseInt(getComputedStyle(proofTrack).gap) || 26;
-      var vw = proofTrack.parentElement.getBoundingClientRect().width;
-      var offset = vw / 2 - cw / 2 - rcIdx * (cw + gap);
-      proofTrack.style.transform = "translateX(" + offset + "px)";
       rcCards.forEach(function (c, i) { c.classList.toggle("active", i === rcIdx); });
+      var vw = proofTrack.parentElement.clientWidth;
+      var active = rcCards[rcIdx];
+      var center = active.offsetLeft + active.offsetWidth / 2;
+      proofTrack.style.transform = "translateX(" + (vw / 2 - center) + "px)";
       if (rcPrev) rcPrev.style.visibility = rcIdx <= 0 ? "hidden" : "visible";
       if (rcNext) rcNext.style.visibility = rcIdx >= rcCards.length - 1 ? "hidden" : "visible";
     };

@@ -1072,12 +1072,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:3px; }
 .itv-cover{ display:grid; grid-template-columns:minmax(0,0.82fr) 1fr; gap:clamp(20px,3vw,44px); align-items:center;
   max-width:980px; margin:0 auto; padding:clamp(18px,2.4vw,30px); background:var(--green-700); border-radius:var(--radius-lg);
-  position:relative; transform-style:preserve-3d; transition:transform .25s ease-out, box-shadow .25s; will-change:transform; }
-.itv-cover::before{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
-  opacity:0; transition:opacity .3s;
-  background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.16), transparent 60%); }
-.itv-cover.lit{ box-shadow:0 30px 60px rgba(0,0,0,.4); }
-.itv-cover.lit::before{ opacity:1; }
+  position:relative; transform-style:preserve-3d; transition:transform .25s ease-out; will-change:transform; }
 .itv-photo{ position:relative; z-index:1; width:100%; aspect-ratio:1; border-radius:var(--radius-md); overflow:hidden;
   background:#16271e center/cover no-repeat; transform:translateZ(22px); }
 .itv-text{ position:relative; z-index:1; transform:translateZ(38px); }
@@ -1108,7 +1103,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-panel.is-active .itv-headline{ animation-delay:.10s; }
 .itv-panel.is-active .itv-sub{ animation-delay:.18s; }
 .itv-panel.is-active .itv-meta{ animation-delay:.26s; }
-@keyframes itvIn{ from{ opacity:0; transform:scale(.985); } to{ opacity:1; transform:none; } }
+@keyframes itvIn{ from{ opacity:0; } to{ opacity:1; } }
 @keyframes itvUp{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:none; } }
 @keyframes itvKen{ from{ transform:scale(1.03); } to{ transform:scale(1.12); } }
 @media (prefers-reduced-motion: reduce){ .itv-photo{ animation:none; } .itv-progress{ display:none; } .itv-cover{ transform:none !important; } .itv-cover::before{ display:none; } }

@@ -324,7 +324,7 @@
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var fine = window.matchMedia("(pointer: fine)").matches;
     var DUR = fine ? 5200 : 6500;
-    var current = 0, paused = false, elapsed = 0, last = null;
+    var current = 0, elapsed = 0, last = null;
 
     function panelFor(tab) {
       var i = tab.getAttribute("data-b");
@@ -371,11 +371,9 @@
       t.addEventListener("click", function () { activate(k); });
     });
 
-    stage.addEventListener("mouseenter", function () { paused = true; });
     stage.addEventListener("mouseleave", function () {
-      paused = false;
       var cov = stage.querySelector(".itv-panel.is-active .itv-cover");
-      if (cov) { cov.style.transform = ""; cov.classList.remove("lit"); }
+      if (cov) cov.style.transform = "";
     });
 
     if (fine && !reduce) {
@@ -386,21 +384,16 @@
         var px = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
         var py = Math.min(Math.max((e.clientY - r.top) / r.height, 0), 1);
         cov.style.transform = "rotateX(" + ((0.5 - py) * 6).toFixed(2) + "deg) rotateY(" + ((px - 0.5) * 7).toFixed(2) + "deg)";
-        cov.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-        cov.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-        cov.classList.add("lit");
       });
     }
 
     function loop(ts) {
       if (last == null) last = ts;
       var dt = ts - last; last = ts;
-      if (!paused) {
-        elapsed += dt;
-        var p = Math.min(elapsed / DUR, 1);
-        if (bar) bar.style.width = (p * 100).toFixed(1) + "%";
-        if (p >= 1) { elapsed = 0; activate(current + 1); }
-      }
+      elapsed += dt;
+      var p = Math.min(elapsed / DUR, 1);
+      if (bar) bar.style.width = (p * 100).toFixed(1) + "%";
+      if (p >= 1) { elapsed = 0; activate(current + 1); }
       requestAnimationFrame(loop);
     }
 

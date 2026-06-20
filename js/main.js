@@ -202,8 +202,8 @@
   var vhScroll = document.getElementById("vhScroll");
   if (vhScroll) {
     vhScroll.addEventListener("click", function () {
-      var hero = document.querySelector(".hero");
-      if (hero) window.scrollTo({ top: hero.getBoundingClientRect().top + window.scrollY - 60, behavior: "smooth" });
+      var t = document.getElementById("apply");
+      if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 60, behavior: "smooth" });
     });
   }
 

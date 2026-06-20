@@ -313,26 +313,18 @@
     sync();
   })();
 
-  /* ---------- 가맹점주 인터뷰 — 자동 슬라이드 + 진행바 + 카운트업 + 3D 틸트 + 스포트라이트 ---------- */
+  /* ---------- 가맹점주 인터뷰 — 3D 커버플로우 (좌우분할 카드 회전) + 자동순환 + 진행바 + 카운트업 ---------- */
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll(".itv-tab"));
-    var panels = document.querySelectorAll(".itv-panel");
+    var panels = Array.prototype.slice.call(document.querySelectorAll(".itv-panel"));
     var stage = document.querySelector(".itv-stage");
     var bar = document.getElementById("itvBar");
-    if (!tabs.length || !stage) return;
+    if (!panels.length || !stage) return;
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var fine = window.matchMedia("(pointer: fine)").matches;
-    var DUR = fine ? 5200 : 6500;
+    var n = panels.length;
     var current = 0, elapsed = 0, last = null;
-
-    function panelFor(tab) {
-      var i = tab.getAttribute("data-b");
-      for (var k = 0; k < panels.length; k++) {
-        if (panels[k].getAttribute("data-p") === i) return panels[k];
-      }
-      return null;
-    }
+    var DUR = 4600;
 
     function countUp(panel) {
       var el = panel && panel.querySelector(".itv-stat b");
@@ -352,40 +344,60 @@
       requestAnimationFrame(step);
     }
 
-    function activate(idx) {
-      current = (idx + tabs.length) % tabs.length;
-      tabs.forEach(function (t, k) {
-        var on = k === current;
+    function layout() {
+      var w = panels[0].getBoundingClientRect().width || 600;
+      var narrow = window.innerWidth < 760;
+      var spread = narrow ? 0.52 : 0.6, angle = narrow ? 30 : 38, depth = narrow ? 160 : 230;
+      panels.forEach(function (p, i) {
+        var o = i - current;
+        if (o > n / 2) o -= n;
+        if (o < -n / 2) o += n;
+        var a = Math.abs(o);
+        var tx = o * w * spread;
+        var tz = -a * depth;
+        var ry = -o * angle;
+        var sc = o === 0 ? 1 : 0.82;
+        p.style.transform = "translate(-50%,-50%) translateX(" + tx + "px) translateZ(" + tz + "px) rotateY(" + ry + "deg) scale(" + sc + ")";
+        p.style.opacity = a >= 2 ? "0" : (o === 0 ? "1" : "0.55");
+        p.style.zIndex = String(100 - a);
+        p.style.pointerEvents = a < 2 ? "auto" : "none";
+        p.classList.toggle("is-active", o === 0);
+        p.setAttribute("aria-hidden", o === 0 ? "false" : "true");
+      });
+    }
+
+    function syncTabs() {
+      var dp = panels[current].getAttribute("data-p");
+      tabs.forEach(function (t) {
+        var on = t.getAttribute("data-b") === dp;
         t.classList.toggle("is-active", on);
         t.setAttribute("aria-selected", on ? "true" : "false");
       });
-      var active = null;
-      panels.forEach(function (p) { p.classList.remove("is-active"); });
-      active = panelFor(tabs[current]);
-      if (active) { active.classList.add("is-active"); countUp(active); }
+    }
+
+    function setCenter(idx) {
+      current = (idx + n) % n;
+      layout();
+      syncTabs();
+      countUp(panels[current]);
       elapsed = 0;
       if (bar) bar.style.width = "0%";
     }
 
-    tabs.forEach(function (t, k) {
-      t.addEventListener("click", function () { activate(k); });
+    panels.forEach(function (p, i) {
+      p.addEventListener("click", function () { if (i !== current) setCenter(i); });
     });
-
-    stage.addEventListener("mouseleave", function () {
-      var cov = stage.querySelector(".itv-panel.is-active .itv-cover");
-      if (cov) cov.style.transform = "";
-    });
-
-    if (fine && !reduce) {
-      stage.addEventListener("mousemove", function (e) {
-        var cov = stage.querySelector(".itv-panel.is-active .itv-cover");
-        if (!cov) return;
-        var r = cov.getBoundingClientRect();
-        var px = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
-        var py = Math.min(Math.max((e.clientY - r.top) / r.height, 0), 1);
-        cov.style.transform = "rotateX(" + ((0.5 - py) * 6).toFixed(2) + "deg) rotateY(" + ((px - 0.5) * 7).toFixed(2) + "deg)";
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        var dp = t.getAttribute("data-b");
+        for (var k = 0; k < panels.length; k++) {
+          if (panels[k].getAttribute("data-p") === dp) { setCenter(k); break; }
+        }
       });
-    }
+    });
+
+    var rt;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(layout, 120); });
 
     function loop(ts) {
       if (last == null) last = ts;
@@ -393,12 +405,13 @@
       elapsed += dt;
       var p = Math.min(elapsed / DUR, 1);
       if (bar) bar.style.width = (p * 100).toFixed(1) + "%";
-      if (p >= 1) { elapsed = 0; activate(current + 1); }
+      if (p >= 1) { elapsed = 0; setCenter(current + 1); }
       requestAnimationFrame(loop);
     }
 
-    var init = panelFor(tabs[0]);
-    if (init) countUp(init);
+    layout();
+    syncTabs();
+    countUp(panels[0]);
     if (!reduce) requestAnimationFrame(loop);
   })();
 })();

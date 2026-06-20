@@ -1061,21 +1061,18 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-tab.is-active{ background:#fff; color:var(--green-700); border-color:#fff; }
 .itv-tab:focus-visible{ outline:2px solid var(--mint-bright); outline-offset:2px; }
 
-.itv-stage{ position:relative; }
-.itv-panel{ display:none; }
-.itv-panel.is-active{ display:block; }
-
-/* 좌우 분할형 — 정방형 사진(좌) + 텍스트(우), 보더리스 라운드 + 효과 */
-.itv-stage{ perspective:1200px; }
-.itv-progress{ height:3px; max-width:980px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:0;
+/* 3D 커버플로우 — 좌우분할 카드가 가운데 정면, 좌우는 입체 회전 */
+.itv-stage{ position:relative; perspective:1600px; height:clamp(370px,38vw,440px); overflow:hidden; }
+.itv-panel{ position:absolute; left:50%; top:50%; width:min(660px,90%); transform-style:preserve-3d;
+  transition:transform .6s cubic-bezier(.22,.61,.36,1), opacity .55s; will-change:transform, opacity; }
+.itv-progress{ height:3px; max-width:660px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:0;
   background:rgba(255,255,255,.14); overflow:hidden; }
 .itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:0; }
-.itv-cover{ display:grid; grid-template-columns:minmax(0,0.82fr) 1fr; gap:clamp(20px,3vw,44px); align-items:center;
-  max-width:980px; margin:0 auto; padding:clamp(18px,2.4vw,30px); background:var(--green-700); border-radius:0;
-  position:relative; transform-style:preserve-3d; transition:transform .25s ease-out; will-change:transform; }
-.itv-photo{ position:relative; z-index:1; width:100%; aspect-ratio:1; border-radius:0; overflow:hidden;
-  background:#16271e center/cover no-repeat; transform:translateZ(22px); }
-.itv-text{ position:relative; z-index:1; transform:translateZ(38px); }
+.itv-cover{ display:grid; grid-template-columns:minmax(0,0.8fr) 1fr; gap:clamp(16px,2vw,28px); align-items:center;
+  width:100%; padding:clamp(16px,2vw,24px); background:var(--green-700); border-radius:0; }
+.itv-photo{ position:relative; width:100%; aspect-ratio:1; border-radius:0; overflow:hidden;
+  background:#16271e center/cover no-repeat; }
+.itv-text{ position:relative; }
 .itv-ph{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:10px; color:rgba(255,255,255,.42); background:linear-gradient(135deg,#22312b,#15211b); }
 .itv-ph svg{ width:40px; height:40px; }
@@ -1084,7 +1081,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-cover-top{ display:flex; align-items:center; gap:10px; margin-bottom:clamp(12px,1.6vw,18px); }
 .itv-kicker{ font-size:12px; font-weight:800; letter-spacing:.22em; color:rgba(255,255,255,.78); }
 .itv-branch{ font-size:12.5px; font-weight:800; color:var(--green-900); background:#ffe07a; border-radius:999px; padding:5px 13px; }
-.itv-headline{ margin:0; font-size:clamp(24px,3vw,38px); font-weight:900; line-height:1.12; letter-spacing:-.035em; color:#fff; }
+.itv-headline{ margin:0; font-size:clamp(21px,2.2vw,31px); font-weight:900; line-height:1.14; letter-spacing:-.035em; color:#fff; }
 .itv-sub{ margin:14px 0 0; font-size:clamp(14px,1.5vw,16.5px); line-height:1.6; color:rgba(255,255,255,.82); }
 .itv-meta{ display:flex; align-items:center; gap:12px; margin-top:22px; padding-top:18px;
   border-top:1px solid rgba(255,255,255,.14); flex-wrap:wrap; }
@@ -1093,8 +1090,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-stat{ font-size:14px; color:rgba(255,255,255,.8); }
 .itv-stat b{ color:#ffe07a; font-weight:800; font-size:16px; margin-left:3px; }
 
-/* 등장 애니메이션 (탭 전환 시 재생) */
-.itv-panel.is-active .itv-cover{ animation:itvIn .55s cubic-bezier(.16,1,.3,1); }
+/* 중앙 카드 텍스트 등장 애니메이션 */
 .itv-panel.is-active .itv-kicker,
 .itv-panel.is-active .itv-branch,
 .itv-panel.is-active .itv-headline,
@@ -1109,7 +1105,9 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 @media (prefers-reduced-motion: reduce){ .itv-photo{ animation:none; } .itv-progress{ display:none; } .itv-cover{ transform:none !important; } .itv-cover::before{ display:none; } }
 
 @media (max-width:640px){
-  .itv-cover{ grid-template-columns:1fr; gap:18px; }
+  .itv-cover{ gap:12px; padding:13px; }
+  .itv-headline{ font-size:19px; }
+  .itv-sub{ display:none; }
   .itv-tabs{ gap:6px; }
   .itv-tab{ padding:8px 14px; font-size:13px; }
 }

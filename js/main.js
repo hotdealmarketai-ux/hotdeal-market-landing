@@ -353,6 +353,9 @@
         if (o > n / 2) o -= n;
         if (o < -n / 2) o += n;
         var a = Math.abs(o);
+        // wrap(좌↔우 끝 점프) 카드는 화면 가로지르기 없이 순간이동
+        var wrapped = (typeof p.__o === "number") && Math.abs(o - p.__o) > 2;
+        if (wrapped) p.style.transition = "none";
         var tx = o * w * spread;
         var tz = -a * depth;
         var ry = -o * angle;
@@ -363,6 +366,8 @@
         p.style.pointerEvents = a < 2 ? "auto" : "none";
         p.classList.toggle("is-active", o === 0);
         p.setAttribute("aria-hidden", o === 0 ? "false" : "true");
+        if (wrapped) { void p.offsetWidth; p.style.transition = ""; }
+        p.__o = o;
       });
     }
 

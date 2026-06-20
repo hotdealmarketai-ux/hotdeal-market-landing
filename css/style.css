@@ -1064,7 +1064,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 /* 3D 커버플로우 — 좌우분할 카드가 가운데 정면, 좌우는 입체 회전 */
 .itv-stage{ position:relative; perspective:1600px; height:clamp(370px,38vw,440px); overflow:hidden; }
 .itv-panel{ position:absolute; left:50%; top:50%; width:min(660px,90%); transform-style:preserve-3d;
-  transition:transform .6s cubic-bezier(.22,.61,.36,1), opacity .55s; will-change:transform, opacity; }
+  transition:transform .55s cubic-bezier(.22,.61,.36,1); will-change:transform; }
 .itv-progress{ height:3px; max-width:660px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:0;
   background:rgba(255,255,255,.14); overflow:hidden; }
 .itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:0; }

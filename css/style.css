@@ -1067,13 +1067,13 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 
 /* 좌우 분할형 — 정방형 사진(좌) + 텍스트(우), 보더리스 라운드 + 효과 */
 .itv-stage{ perspective:1200px; }
-.itv-progress{ height:3px; max-width:980px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:3px;
+.itv-progress{ height:3px; max-width:980px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:0;
   background:rgba(255,255,255,.14); overflow:hidden; }
-.itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:3px; }
+.itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:0; }
 .itv-cover{ display:grid; grid-template-columns:minmax(0,0.82fr) 1fr; gap:clamp(20px,3vw,44px); align-items:center;
-  max-width:980px; margin:0 auto; padding:clamp(18px,2.4vw,30px); background:var(--green-700); border-radius:var(--radius-lg);
+  max-width:980px; margin:0 auto; padding:clamp(18px,2.4vw,30px); background:var(--green-700); border-radius:0;
   position:relative; transform-style:preserve-3d; transition:transform .25s ease-out; will-change:transform; }
-.itv-photo{ position:relative; z-index:1; width:100%; aspect-ratio:1; border-radius:var(--radius-md); overflow:hidden;
+.itv-photo{ position:relative; z-index:1; width:100%; aspect-ratio:1; border-radius:0; overflow:hidden;
   background:#16271e center/cover no-repeat; transform:translateZ(22px); }
 .itv-text{ position:relative; z-index:1; transform:translateZ(38px); }
 .itv-ph{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;

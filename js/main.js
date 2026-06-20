@@ -20,6 +20,40 @@
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
 
+  /* ---------- 통계 카운트업 (0 → 목표값) ---------- */
+  (function () {
+    var counters = document.querySelectorAll(".cnt[data-to]");
+    if (!counters.length) return;
+    function fmt(n, t) {
+      if (t === "dec") return n.toFixed(1);
+      if (t === "comma") return Math.round(n).toLocaleString();
+      return Math.round(n).toString();
+    }
+    function run(el) {
+      var to = parseFloat(el.getAttribute("data-to"));
+      var t = el.getAttribute("data-fmt");
+      var dur = 1200, start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(to * eased, t);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    if ("IntersectionObserver" in window) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { run(e.target); cio.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      counters.forEach(function (el) { cio.observe(el); });
+    } else {
+      counters.forEach(run);
+    }
+  })();
+
   /* ---------- Toast ---------- */
   var toast = document.getElementById("toast");
   var toastMsg = document.getElementById("toastMsg");
@@ -152,35 +186,30 @@
     });
   }
 
-  /* ---------- 지점 매출 메모 슬라이더 (transform) ---------- */
+  /* ---------- 지점 매출 영수증 캐러셀 (가운데 선명 · 양옆 흐릿) ---------- */
   var proofTrack = document.getElementById("proofTrack");
   if (proofTrack) {
-    var memos = proofTrack.querySelectorAll(".memo");
-    var idx = 0;
-    var metrics = function () {
-      var c = proofTrack.querySelector(".memo");
-      var gap = parseInt(getComputedStyle(proofTrack).gap) || 20;
-      var cw = c ? c.getBoundingClientRect().width : 320;
-      var view = proofTrack.parentElement.getBoundingClientRect().width;
-      var visible = Math.max(1, Math.round((view + gap) / (cw + gap)));
-      var maxIdx = Math.max(0, memos.length - visible);
-      return { step: cw + gap, maxIdx: maxIdx };
+    var rcCards = proofTrack.querySelectorAll(".rc");
+    var rcIdx = 0;
+    var rcPrev = document.getElementById("proofPrev");
+    var rcNext = document.getElementById("proofNext");
+    var rcLayout = function () {
+      if (!rcCards.length) return;
+      var cw = rcCards[0].getBoundingClientRect().width;
+      var gap = parseInt(getComputedStyle(proofTrack).gap) || 26;
+      var vw = proofTrack.parentElement.getBoundingClientRect().width;
+      var offset = vw / 2 - cw / 2 - rcIdx * (cw + gap);
+      proofTrack.style.transform = "translateX(" + offset + "px)";
+      rcCards.forEach(function (c, i) { c.classList.toggle("active", i === rcIdx); });
+      if (rcPrev) rcPrev.style.visibility = rcIdx <= 0 ? "hidden" : "visible";
+      if (rcNext) rcNext.style.visibility = rcIdx >= rcCards.length - 1 ? "hidden" : "visible";
     };
-    var apply = function () {
-      var m = metrics();
-      if (idx > m.maxIdx) idx = m.maxIdx;
-      if (idx < 0) idx = 0;
-      proofTrack.style.transform = "translateX(" + (-idx * m.step) + "px)";
-      if (pp) pp.style.visibility = idx <= 0 ? "hidden" : "visible";
-      if (pn) pn.style.visibility = idx >= m.maxIdx ? "hidden" : "visible";
-    };
-    var pn = document.getElementById("proofNext");
-    var pp = document.getElementById("proofPrev");
-    if (pn) pn.addEventListener("click", function () { idx += 1; apply(); });
-    if (pp) pp.addEventListener("click", function () { idx -= 1; apply(); });
-    var rt;
-    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(apply, 150); });
-    apply();
+    if (rcNext) rcNext.addEventListener("click", function () { if (rcIdx < rcCards.length - 1) { rcIdx++; rcLayout(); } });
+    if (rcPrev) rcPrev.addEventListener("click", function () { if (rcIdx > 0) { rcIdx--; rcLayout(); } });
+    rcCards.forEach(function (c, i) { c.addEventListener("click", function () { if (i !== rcIdx) { rcIdx = i; rcLayout(); } }); });
+    var rcRt;
+    window.addEventListener("resize", function () { clearTimeout(rcRt); rcRt = setTimeout(rcLayout, 150); });
+    rcLayout();
   }
 
   /* ---------- 가맹점주 인터뷰 (YouTube) ----------

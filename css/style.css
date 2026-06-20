@@ -1065,10 +1065,9 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-panel{ display:none; }
 .itv-panel.is-active{ display:block; }
 
-/* 매거진 커버형 — 풀블리드(화면 가로 꽉, 테두리·그림자 없음, 각진 모서리) */
-.itv-cover{ --ix:max(20px, calc((100vw - 1140px)/2 + 20px));
-  position:relative; width:100vw; margin-left:calc(50% - 50vw);
-  aspect-ratio:16/10; max-height:600px; overflow:hidden; }
+/* 매거진 커버형 — 보더리스 라운드(테두리·그림자 없음, 둥근 모서리, 사이즈 축소) */
+.itv-cover{ position:relative; width:100%; max-width:940px; margin:0 auto;
+  aspect-ratio:16/9; max-height:440px; border-radius:var(--radius-lg); overflow:hidden; }
 .itv-photo{ position:absolute; inset:0; background:#16271e center/cover no-repeat;
   animation:itvKen 16s ease-in-out infinite alternate; }
 .itv-ph{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -1077,12 +1076,12 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-ph span{ font-size:13px; font-weight:600; letter-spacing:-.01em; }
 .itv-shade{ position:absolute; inset:0; pointer-events:none;
   background:linear-gradient(180deg, rgba(6,14,10,.18) 0%, rgba(6,14,10,0) 30%, rgba(6,14,10,.55) 64%, rgba(6,14,10,.92) 100%); }
-.itv-cover-top{ position:absolute; top:clamp(16px,2.2vw,26px); left:var(--ix); right:var(--ix);
+.itv-cover-top{ position:absolute; top:clamp(14px,2vw,22px); left:clamp(16px,2.2vw,26px); right:clamp(16px,2.2vw,26px);
   display:flex; align-items:center; justify-content:space-between; z-index:2; }
 .itv-kicker{ font-size:12px; font-weight:800; letter-spacing:.22em; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.5); }
 .itv-branch{ font-size:12.5px; font-weight:800; color:var(--green-900); background:#ffe07a; border-radius:999px; padding:5px 13px; }
-.itv-cover-btm{ position:absolute; left:var(--ix); right:var(--ix); bottom:clamp(24px,3vw,40px); z-index:2; }
-.itv-headline{ margin:0; font-size:clamp(27px,4.4vw,48px); font-weight:900; line-height:1.1; letter-spacing:-.035em;
+.itv-cover-btm{ position:absolute; left:clamp(18px,2.4vw,28px); right:clamp(18px,2.4vw,28px); bottom:clamp(18px,2.4vw,28px); z-index:2; }
+.itv-headline{ margin:0; font-size:clamp(24px,3.4vw,40px); font-weight:900; line-height:1.1; letter-spacing:-.035em;
   color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.5); }
 .itv-sub{ margin:14px 0 0; font-size:clamp(14px,1.5vw,16.5px); line-height:1.6; color:rgba(255,255,255,.9);
   max-width:54ch; text-shadow:0 1px 8px rgba(0,0,0,.5); }

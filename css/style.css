@@ -1533,9 +1533,11 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 
   /* 운영 시스템 — 세로 파이프라인(연결선+흐름 유지) */
   .opp{ grid-template-columns: 1fr !important; gap: 0; max-width: 320px; margin: 0 auto; padding-top: 6px; }
-  .opp-track{ display: block !important; top: 38px; bottom: 38px; left: 27px; right: auto; width: 3px; height: auto; }
-  .opp-track::after{ left: 0; top: -40%; width: 100%; height: 40%;
-    background: linear-gradient(180deg, transparent, var(--mint-bright), transparent); animation: oppflowV 2.4s linear infinite; }
+  .opp-track{ display: block !important; top: 36px; bottom: 36px; left: 26px; right: auto; width: 4px; height: auto;
+    background: rgba(47,227,154,.16); overflow: visible; }
+  .opp-track::after{ left: 0; top: -45%; width: 100%; height: 45%; border-radius: 4px;
+    background: linear-gradient(180deg, transparent, var(--mint-bright), transparent);
+    box-shadow: 0 0 12px 2px rgba(47,227,154,.65); animation: oppflowV 2.2s linear infinite; }
   .opp-node{ display: flex; align-items: center; gap: 16px; text-align: left; padding: 10px 0; }
   .opp-dot{ width: 56px; height: 56px; margin: 0; flex: 0 0 auto; }
   .opp-dot svg.ic{ width: 26px; height: 26px; }
@@ -1561,4 +1563,32 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
   .pf-hv{ font-size: 44px; }
   .pf-tag{ font-size: 11.5px; }
   .v{ font-size: 28px; }
+}
+
+/* ============================================================
+   모바일 폴리시3 — 인터뷰 단일카드/보조설명, 영수증 간격, 시간표 1열
+   ============================================================ */
+@media (max-width: 640px){
+  /* 인터뷰: 모바일은 단일 카드(빈공간 제거) + 보조설명 표시 */
+  .itv-stage{ height: auto !important; perspective: none; }
+  .itv-panel{ position: static !important; transform: none !important; opacity: 1 !important;
+    width: 100% !important; display: none !important; transition: none !important; }
+  .itv-panel.is-active{ display: block !important; }
+  /* 단일카드 display 토글로 itvUp 진입 애니메이션이 0에 멈추는 문제 → 텍스트 고정 표시 */
+  .itv-panel.is-active .itv-branch,
+  .itv-panel.is-active .itv-headline,
+  .itv-panel.is-active .itv-sub,
+  .itv-panel.is-active .itv-meta{ animation: none !important; opacity: 1 !important; transform: none !important; }
+  .itv-cover{ grid-template-columns: minmax(0,.82fr) 1fr; gap: 12px; padding: 12px; align-items: center; }
+  .itv-headline{ font-size: 16px; line-height: 1.2; }
+  .itv-sub{ display: block !important; font-size: 11.5px; line-height: 1.45; margin-top: 7px; }
+  .itv-meta{ margin-top: 10px; padding-top: 9px; }
+
+  /* 영수증: '핫딜마켓이라서 가능합니다!' 태그 ↔ 영수증 간격 축소 */
+  .pf-head{ margin-bottom: 14px; }
+  .rcw-viewport{ padding-top: 8px; padding-bottom: 22px; }
+
+  /* 수익구조 시간표 1열 */
+  .inf-time{ flex-direction: column; align-items: center; gap: 8px; margin-bottom: 22px; }
+  .inf-tchip{ width: 100%; max-width: 290px; justify-content: center; }
 }

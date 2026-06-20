@@ -1006,7 +1006,12 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .float-btn.call { background: var(--green-700); }
 .float-btn.call:hover { background: var(--green-800); }
 /* 모바일: 영상 하단 도크(폼)가 CTA 역할 → 플로팅 버튼 숨김 (소스 순서상 기본 규칙 뒤) */
-@media (max-width: 860px) { .float-stack { display: none; } }
+@media (max-width: 860px) {
+  .float-stack { display: flex; right: 16px; bottom: 104px; }
+  .float-stack .float-btn.call { width: 54px; height: 54px; padding: 0; border-radius: 50%;
+    justify-content: center; font-size: 0; box-shadow: 0 8px 22px rgba(0,0,0,.32); }
+  .float-stack .float-btn.call svg { width: 24px; height: 24px; }
+}
 
 /* ---- Green band: branch revenue memo slider ---- */
 .section.greenbg { background: linear-gradient(135deg, var(--green-600), var(--green-800)); }
@@ -1466,3 +1471,77 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 @media (max-width: 1024px){
   html, body{ overflow-x:hidden; }
 }
+
+/* ============================================================
+   모바일 정밀 폴리시 (≤640) — 도크/폼/메뉴/인터뷰/영수증/통계/운영
+   ============================================================ */
+@media (max-width: 640px){
+  /* 하단 마퀴 얇게 */
+  .sales-marquee{ height: 34px; }
+  .sales-marquee .mq-item{ font-size: 11.5px; padding: 0 14px; }
+  .sales-marquee .mq-item::after{ margin-left: 14px; width: 4px; height: 4px; }
+  .sales-marquee .mq-item b{ font-size: 11.5px; }
+
+  /* 빠른 상담폼 — 한 줄 슬림 (성함/연락처 + 신청, 동의는 작은 줄) */
+  .quick-form{ padding: 7px 11px; gap: 6px 8px; flex-wrap: wrap; }
+  .quick-form .qf-brand{ display: none; }
+  .qf-fields{ flex-wrap: nowrap; gap: 6px; width: 100%; order: 1; }
+  .qf-fields input{ height: 38px; font-size: 13px; padding: 0 11px; }
+  .qf-fields input[name="name"]{ flex: 1 1 0; min-width: 0; }
+  .qf-fields input[name="phone"]{ flex: 1.35 1 0; min-width: 0; }
+  .qf-fields input[name="region"]{ display: none; }
+  .qf-submit{ flex: 0 0 auto; height: 38px; padding: 0 16px; font-size: 13.5px; }
+  .qf-agree{ order: 2; width: 100%; margin: 0; font-size: 10.5px; justify-content: center; }
+  .qf-agree input{ width: 13px; height: 13px; }
+
+  /* 플로팅 전화 FAB — 도크 위쪽 */
+  .float-stack{ right: 14px; bottom: 100px; }
+
+  /* 햄버거 메뉴 텍스트 축소 + 얇게 */
+  .header.menu-open .nav-links a{ font-size: 14.5px; font-weight: 500; padding: 12px 20px; }
+  .header.menu-open .nav-tel-m{ font-size: 13.5px; font-weight: 600; }
+
+  /* 인터뷰 텍스트 축소 */
+  .itv-headline{ font-size: 17px; line-height: 1.15; }
+  .itv-kicker{ font-size: 10px; letter-spacing: .14em; }
+  .itv-branch{ font-size: 10.5px; padding: 3px 9px; }
+  .itv-cover-top{ margin-bottom: 8px; }
+  .itv-meta{ margin-top: 12px; padding-top: 10px; gap: 8px; }
+  .itv-by{ font-size: 12px; }
+  .itv-stat{ font-size: 11.5px; }
+  .itv-stat b{ font-size: 13px; }
+
+  /* 영수증 캐러셀 — 카드폭 화면맞춤(가운데 + 양옆 살짝) */
+  .rcw .rc{ flex: 0 0 84vw; }
+  .rcw-track{ gap: 14px; }
+  .rcw-arrow{ width: 38px; height: 38px; }
+  .rc{ padding: 18px 18px 0; }
+  .rc-store .nm{ font-size: 17px; }
+  .rc-tot .tv{ font-size: 17px; }
+
+  /* 통계바(pf-statbar) — 2열 정돈 */
+  .pf-statbar{ grid-template-columns: repeat(2,1fr); }
+  .pf-st{ gap: 10px; padding: 14px 12px; }
+  .pf-st:nth-child(odd){ border-right: 1px solid rgba(255,255,255,.1); }
+  .pf-st:nth-child(even){ border-right: none; }
+  .pf-st:nth-child(1), .pf-st:nth-child(2){ border-bottom: 1px solid rgba(255,255,255,.1); }
+  .pf-si{ width: 36px; height: 36px; }
+  .pf-si svg.ic{ width: 19px; height: 19px; }
+  .pf-sv{ font-size: 19px; }
+  .pf-sv u{ font-size: 11px; }
+  .pf-sl{ font-size: 11.5px; }
+
+  /* 운영 시스템 — 세로 파이프라인(연결선+흐름 유지) */
+  .opp{ grid-template-columns: 1fr !important; gap: 0; max-width: 320px; margin: 0 auto; padding-top: 6px; }
+  .opp-track{ display: block !important; top: 38px; bottom: 38px; left: 27px; right: auto; width: 3px; height: auto; }
+  .opp-track::after{ left: 0; top: -40%; width: 100%; height: 40%;
+    background: linear-gradient(180deg, transparent, var(--mint-bright), transparent); animation: oppflowV 2.4s linear infinite; }
+  .opp-node{ display: flex; align-items: center; gap: 16px; text-align: left; padding: 10px 0; }
+  .opp-dot{ width: 56px; height: 56px; margin: 0; flex: 0 0 auto; }
+  .opp-dot svg.ic{ width: 26px; height: 26px; }
+  .opp-num{ top: -2px; left: 40px; right: auto; }
+  .opp-node h3{ font-size: 15px; margin-bottom: 2px; }
+  .opp-node p{ font-size: 12.5px; padding: 0; }
+  .opp-msg{ font-size: 14px; margin-top: 26px; }
+}
+@keyframes oppflowV{ to{ top: 110%; } }

@@ -1065,11 +1065,22 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 .itv-panel{ display:none; }
 .itv-panel.is-active{ display:block; }
 
-/* 좌우 분할형 — 정방형 사진(좌) + 텍스트(우), 보더리스 라운드 */
+/* 좌우 분할형 — 정방형 사진(좌) + 텍스트(우), 보더리스 라운드 + 효과 */
+.itv-stage{ perspective:1200px; }
+.itv-progress{ height:3px; max-width:980px; margin:0 auto clamp(16px,2.2vw,24px); border-radius:3px;
+  background:rgba(255,255,255,.14); overflow:hidden; }
+.itv-progress-bar{ height:100%; width:0; background:#ffe07a; border-radius:3px; }
 .itv-cover{ display:grid; grid-template-columns:minmax(0,0.82fr) 1fr; gap:clamp(20px,3vw,44px); align-items:center;
-  max-width:980px; margin:0 auto; padding:clamp(18px,2.4vw,30px); background:var(--green-700); border-radius:var(--radius-lg); }
-.itv-photo{ position:relative; width:100%; aspect-ratio:1; border-radius:var(--radius-md); overflow:hidden;
-  background:#16271e center/cover no-repeat; }
+  max-width:980px; margin:0 auto; padding:clamp(18px,2.4vw,30px); background:var(--green-700); border-radius:var(--radius-lg);
+  position:relative; transform-style:preserve-3d; transition:transform .25s ease-out, box-shadow .25s; will-change:transform; }
+.itv-cover::before{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
+  opacity:0; transition:opacity .3s;
+  background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.16), transparent 60%); }
+.itv-cover.lit{ box-shadow:0 30px 60px rgba(0,0,0,.4); }
+.itv-cover.lit::before{ opacity:1; }
+.itv-photo{ position:relative; z-index:1; width:100%; aspect-ratio:1; border-radius:var(--radius-md); overflow:hidden;
+  background:#16271e center/cover no-repeat; transform:translateZ(22px); }
+.itv-text{ position:relative; z-index:1; transform:translateZ(38px); }
 .itv-ph{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:10px; color:rgba(255,255,255,.42); background:linear-gradient(135deg,#22312b,#15211b); }
 .itv-ph svg{ width:40px; height:40px; }
@@ -1100,7 +1111,7 @@ svg.ic { width: 22px; height: 22px; display: block; flex: 0 0 auto;
 @keyframes itvIn{ from{ opacity:0; transform:scale(.985); } to{ opacity:1; transform:none; } }
 @keyframes itvUp{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:none; } }
 @keyframes itvKen{ from{ transform:scale(1.03); } to{ transform:scale(1.12); } }
-@media (prefers-reduced-motion: reduce){ .itv-photo{ animation:none; } }
+@media (prefers-reduced-motion: reduce){ .itv-photo{ animation:none; } .itv-progress{ display:none; } .itv-cover{ transform:none !important; } .itv-cover::before{ display:none; } }
 
 @media (max-width:640px){
   .itv-cover{ grid-template-columns:1fr; gap:18px; }

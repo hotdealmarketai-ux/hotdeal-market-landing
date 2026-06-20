@@ -313,23 +313,99 @@
     sync();
   })();
 
-  /* ---------- 가맹점주 인터뷰 — 지점 탭 전환 (하나씩 크게) ---------- */
+  /* ---------- 가맹점주 인터뷰 — 자동 슬라이드 + 진행바 + 카운트업 + 3D 틸트 + 스포트라이트 ---------- */
   (function () {
-    var tabs = document.querySelectorAll(".itv-tab");
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".itv-tab"));
     var panels = document.querySelectorAll(".itv-panel");
-    if (!tabs.length) return;
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        var i = tab.getAttribute("data-b");
-        tabs.forEach(function (t) {
-          var on = t === tab;
-          t.classList.toggle("is-active", on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
-        });
-        panels.forEach(function (pn) {
-          pn.classList.toggle("is-active", pn.getAttribute("data-p") === i);
-        });
+    var stage = document.querySelector(".itv-stage");
+    var bar = document.getElementById("itvBar");
+    if (!tabs.length || !stage) return;
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var fine = window.matchMedia("(pointer: fine)").matches;
+    var DUR = fine ? 5200 : 6500;
+    var current = 0, paused = false, elapsed = 0, last = null;
+
+    function panelFor(tab) {
+      var i = tab.getAttribute("data-b");
+      for (var k = 0; k < panels.length; k++) {
+        if (panels[k].getAttribute("data-p") === i) return panels[k];
+      }
+      return null;
+    }
+
+    function countUp(panel) {
+      var el = panel && panel.querySelector(".itv-stat b");
+      if (!el) return;
+      var raw = el.getAttribute("data-val") || el.textContent;
+      el.setAttribute("data-val", raw);
+      var target = parseInt(raw.replace(/[^0-9]/g, ""), 10) || 0;
+      var suffix = raw.replace(/[0-9,]/g, "");
+      if (reduce) { el.textContent = target.toLocaleString() + suffix; return; }
+      var s0 = null, d = 900;
+      function step(ts) {
+        if (!s0) s0 = ts;
+        var p = Math.min((ts - s0) / d, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * e).toLocaleString() + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function activate(idx) {
+      current = (idx + tabs.length) % tabs.length;
+      tabs.forEach(function (t, k) {
+        var on = k === current;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
       });
+      var active = null;
+      panels.forEach(function (p) { p.classList.remove("is-active"); });
+      active = panelFor(tabs[current]);
+      if (active) { active.classList.add("is-active"); countUp(active); }
+      elapsed = 0;
+      if (bar) bar.style.width = "0%";
+    }
+
+    tabs.forEach(function (t, k) {
+      t.addEventListener("click", function () { activate(k); });
     });
+
+    stage.addEventListener("mouseenter", function () { paused = true; });
+    stage.addEventListener("mouseleave", function () {
+      paused = false;
+      var cov = stage.querySelector(".itv-panel.is-active .itv-cover");
+      if (cov) { cov.style.transform = ""; cov.classList.remove("lit"); }
+    });
+
+    if (fine && !reduce) {
+      stage.addEventListener("mousemove", function (e) {
+        var cov = stage.querySelector(".itv-panel.is-active .itv-cover");
+        if (!cov) return;
+        var r = cov.getBoundingClientRect();
+        var px = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
+        var py = Math.min(Math.max((e.clientY - r.top) / r.height, 0), 1);
+        cov.style.transform = "rotateX(" + ((0.5 - py) * 6).toFixed(2) + "deg) rotateY(" + ((px - 0.5) * 7).toFixed(2) + "deg)";
+        cov.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+        cov.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+        cov.classList.add("lit");
+      });
+    }
+
+    function loop(ts) {
+      if (last == null) last = ts;
+      var dt = ts - last; last = ts;
+      if (!paused) {
+        elapsed += dt;
+        var p = Math.min(elapsed / DUR, 1);
+        if (bar) bar.style.width = (p * 100).toFixed(1) + "%";
+        if (p >= 1) { elapsed = 0; activate(current + 1); }
+      }
+      requestAnimationFrame(loop);
+    }
+
+    var init = panelFor(tabs[0]);
+    if (init) countUp(init);
+    if (!reduce) requestAnimationFrame(loop);
   })();
 })();

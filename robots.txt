@@ -1,0 +1,11 @@
+# 핫딜마켓 robots.txt
+User-agent: *
+Allow: /
+Disallow: /concepts.html
+
+# 네이버 검색로봇
+User-agent: Yeti
+Allow: /
+Disallow: /concepts.html
+
+Sitemap: https://hotdealmarket.co.kr/sitemap.xml
